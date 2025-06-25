@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/auth_service.dart';
+import '../../services/uni_service.dart';
 
 class RankingsScreen extends StatefulWidget {
   const RankingsScreen({super.key});
@@ -12,63 +12,6 @@ class RankingsScreen extends StatefulWidget {
 class _RankingsScreenState extends State<RankingsScreen> {
   String? _selectedProgram;
   bool _isLoading = false;
-
-  final List<String> _programs = [
-    'Информационные технологии',
-    'Машиностроение',
-    'Электротехника',
-    'Менеджмент',
-    'Финансы и кредит',
-    'Бухгалтерский учет',
-    'Психология',
-    'История',
-    'Филология',
-  ];
-
-  // Моковые данные для ранжированного списка
-  final Map<String, List<Map<String, dynamic>>> _mockRankings = {
-    'Информационные технологии': [
-      {
-        'fullName': 'Иванов Иван Иванович',
-        'score': 95,
-        'status': 'Рекомендован к зачислению',
-      },
-      {
-        'fullName': 'Петров Петр Петрович',
-        'score': 92,
-        'status': 'Рекомендован к зачислению',
-      },
-      {
-        'fullName': 'Сидоров Сидор Сидорович',
-        'score': 88,
-        'status': 'В списке ожидания',
-      },
-    ],
-    'Машиностроение': [
-      {
-        'fullName': 'Смирнова Анна Ивановна',
-        'score': 94,
-        'status': 'Рекомендован к зачислению',
-      },
-      {
-        'fullName': 'Козлов Алексей Петрович',
-        'score': 89,
-        'status': 'Рекомендован к зачислению',
-      },
-    ],
-    'Менеджмент': [
-      {
-        'fullName': 'Новикова Елена Сергеевна',
-        'score': 93,
-        'status': 'Рекомендован к зачислению',
-      },
-      {
-        'fullName': 'Морозов Дмитрий Иванович',
-        'score': 87,
-        'status': 'В списке ожидания',
-      },
-    ],
-  };
 
   Color _getStatusColor(String status) {
     switch (status) {

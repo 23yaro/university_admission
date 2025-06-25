@@ -14,21 +14,22 @@ import '../routes/auth/login.dart' as auth_login;
 import '../routes/applications/submit.dart' as applications_submit;
 import '../routes/applications/index.dart' as applications_index;
 
-import '../routes/_middleware.dart' as middleware;
 
 void main() async {
-  final address = InternetAddress.tryParse('') ?? InternetAddress.anyIPv6;
+  final address = InternetAddress.anyIPv6;
   final port = int.tryParse(Platform.environment['PORT'] ?? '8080') ?? 8080;
-  hotReload(() => createServer(address, port));
+  createServer(address, port);
 }
 
-Future<HttpServer> createServer(InternetAddress address, int port) {
+Future<HttpServer> createServer(InternetAddress address, int port) async {
   final handler = Cascade().add(buildRootHandler()).handler;
-  return serve(handler, address, port);
+  final server = await serve(handler, address, port);
+  print('\x1B[92m✓\x1B[0m Running on http://${server.address.host}:${server.port}');
+  return server;
 }
 
 Handler buildRootHandler() {
-  final pipeline = const Pipeline().addMiddleware(middleware.middleware);
+  final pipeline = const Pipeline();
   final router = Router()
     ..mount('/applications', (context) => buildApplicationsHandler()(context))
     ..mount('/auth', (context) => buildAuthHandler()(context))

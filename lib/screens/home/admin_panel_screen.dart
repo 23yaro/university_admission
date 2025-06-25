@@ -8,31 +8,6 @@ class AdminPanelScreen extends StatefulWidget {
 }
 
 class _AdminPanelScreenState extends State<AdminPanelScreen> {
-  // Моки пользователей
-  List<Map<String, dynamic>> users = [
-    {
-      'id': '1',
-      'fio': 'Иванов Иван Иванович',
-      'passport': '1234 567890',
-      'dob': '2000-01-01',
-      'status': 'В ожидании',
-    },
-    {
-      'id': '2',
-      'fio': 'Петров Петр Петрович',
-      'passport': '2345 678901',
-      'dob': '2001-02-02',
-      'status': 'Принято',
-    },
-    {
-      'id': '3',
-      'fio': 'Сидорова Анна Сергеевна',
-      'passport': '3456 789012',
-      'dob': '2002-03-03',
-      'status': 'Отклонено',
-    },
-  ];
-
   void _changeStatus(int index, String newStatus) {
     setState(() {
       users[index]['status'] = newStatus;

@@ -5,22 +5,18 @@ import 'package:path/path.dart' as path;
 class StorageService {
   Future<String> uploadFile(File file, String userId, String documentType) async {
     try {
-      // Get application documents directory
       final appDir = await getApplicationDocumentsDirectory();
       final userDir = Directory('${appDir.path}/documents/$userId');
       
-      // Create user directory if it doesn't exist
       if (!await userDir.exists()) {
         await userDir.create(recursive: true);
       }
 
-      // Generate unique filename
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final extension = path.extension(file.path);
       final filename = '${documentType}_$timestamp$extension';
       final targetPath = '${userDir.path}/$filename';
 
-      // Copy file to target location
       await file.copy(targetPath);
 
       return targetPath;

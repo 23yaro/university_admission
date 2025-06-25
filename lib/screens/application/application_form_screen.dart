@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
-import '../../services/auth_service.dart';
+import '../../services/uni_service.dart';
 import '../../services/storage_service.dart';
 import '../../models/user_model.dart';
 
@@ -16,32 +16,15 @@ class ApplicationFormScreen extends StatefulWidget {
 class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _storageService = StorageService();
-  
+
   File? _applicationCopy;
   String? _selectedFaculty;
   String? _selectedProgram;
   String? _selectedStudyForm;
-  
+
   bool _isLoading = false;
   UserModel? _userData;
 
-  final Map<String, List<String>> _facultyPrograms = {
-    'Инженерный факультет': [
-      'Информационные технологии',
-      'Машиностроение',
-      'Электротехника',
-    ],
-    'Экономический факультет': [
-      'Менеджмент',
-      'Финансы и кредит',
-      'Бухгалтерский учет',
-    ],
-    'Гуманитарный факультет': [
-      'Психология',
-      'История',
-      'Филология',
-    ],
-  };
 
   final List<String> _studyForms = [
     'Очная',
@@ -49,10 +32,10 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
     'Очно-заочная',
   ];
 
-  bool get _isDirectionSelected => 
-    _selectedFaculty != null && 
-    _selectedProgram != null && 
-    _selectedStudyForm != null;
+  bool get _isDirectionSelected =>
+      _selectedFaculty != null &&
+      _selectedProgram != null &&
+      _selectedStudyForm != null;
 
   @override
   void initState() {
@@ -67,14 +50,15 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
 
   Future<void> _loadUserData() async {
     try {
-      final user = context.read<AuthService>().currentUser;
+      final user = context.read<UniService>().currentUser;
       if (user != null) {
         if (mounted) {
           setState(() {
             _userData = user;
             if (_facultyPrograms.containsKey(user.faculty)) {
               _selectedFaculty = user.faculty;
-              if (_facultyPrograms[_selectedFaculty]?.contains(user.program) ?? false) {
+              if (_facultyPrograms[_selectedFaculty]?.contains(user.program) ??
+                  false) {
                 _selectedProgram = user.program;
               } else {
                 _selectedProgram = null;
@@ -162,7 +146,8 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
           _userData!.medicalCertificateUrl.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Пожалуйста, загрузите все необходимые документы в разделе "Мои документы"'),
+            content: Text(
+                'Пожалуйста, загрузите все необходимые документы в разделе "Мои документы"'),
           ),
         );
         return;
@@ -171,7 +156,7 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
       setState(() => _isLoading = true);
 
       try {
-        final user = context.read<AuthService>().currentUser;
+        final user = context.read<UniService>().currentUser;
         if (user == null) throw Exception('Пользователь не авторизован');
 
         // Upload application
@@ -182,13 +167,13 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
         );
 
         // Update user data through API
-        await context.read<AuthService>().updateProfile(
-          fullName: _userData!.fullName,
-          passportSeries: _userData!.passportSeries,
-          passportNumber: _userData!.passportNumber,
-          passportIssueDate: _userData!.passportIssueDate,
-          birthDate: _userData!.birthDate,
-        );
+        await context.read<UniService>().updateProfile(
+              fullName: _userData!.fullName,
+              passportSeries: _userData!.passportSeries,
+              passportNumber: _userData!.passportNumber,
+              passportIssueDate: _userData!.passportIssueDate,
+              birthDate: _userData!.birthDate,
+            );
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -292,7 +277,8 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
                               border: OutlineInputBorder(),
                             ),
                             items: _selectedFaculty != null
-                                ? _facultyPrograms[_selectedFaculty]!.map((program) {
+                                ? _facultyPrograms[_selectedFaculty]!
+                                    .map((program) {
                                     return DropdownMenuItem(
                                       value: program,
                                       child: Text(program),
@@ -364,7 +350,8 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
                             width: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4A90E2)),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF4A90E2)),
                             ),
                           )
                         : const Text(
@@ -430,7 +417,9 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
                   side: BorderSide(
                     color: _isDirectionSelected ? Colors.white : Colors.grey,
                   ),
-                  backgroundColor: _isDirectionSelected ? const Color(0xFF4A90E2) : Colors.transparent,
+                  backgroundColor: _isDirectionSelected
+                      ? const Color(0xFF4A90E2)
+                      : Colors.transparent,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -457,4 +446,4 @@ class _ApplicationFormScreenState extends State<ApplicationFormScreen> {
       ],
     );
   }
-} 
+}

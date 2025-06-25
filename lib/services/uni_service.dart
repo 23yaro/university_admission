@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:university_admission/models/user_model.dart';
+import '../models/user_model.dart';
 import 'package:http/http.dart' as http;
 
-class AuthService {
+class UniService {
   static const String _currentUserKey = 'current_user';
   
   UserModel? _currentUser;

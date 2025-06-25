@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:university_admission/screens/auth/registration_screen.dart';
 import 'package:university_admission/screens/home/home_screen.dart';
-import 'package:university_admission/services/auth_service.dart';
+import 'package:university_admission/services/uni_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authService = Provider.of<AuthService>(context, listen: false);
+      final authService = Provider.of<UniService>(context, listen: false);
       await authService.signInWithEmailAndPassword(
         _emailController.text.trim(),
         _passwordController.text,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:university_admission/screens/home/home_screen.dart';
-import '../../services/auth_service.dart';
+import '../../services/uni_service.dart';
 import '../../models/user_model.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final authService = Provider.of<AuthService>(context, listen: false);
+      final authService = Provider.of<UniService>(context, listen: false);
       final userData = UserModel(
         id: '',
         loginId: '',

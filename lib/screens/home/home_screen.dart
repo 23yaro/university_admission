@@ -5,14 +5,14 @@ import 'package:university_admission/screens/documents/documents_screen.dart';
 import 'package:university_admission/screens/application/application_form_screen.dart';
 import 'package:university_admission/screens/application/application_status_screen.dart';
 import 'package:university_admission/screens/application/rankings_screen.dart';
-import 'package:university_admission/services/auth_service.dart';
+import 'package:university_admission/services/uni_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<UniService>(context);
     final user = authService.currentUser;
 
     return Scaffold(

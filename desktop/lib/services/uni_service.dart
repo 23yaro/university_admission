@@ -1,27 +1,23 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/user_model.dart';
+import 'package:university_admission/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
-class AuthService {
+class UniService {
   static const String _currentUserKey = 'current_user';
   
   UserModel? _currentUser;
   late SharedPreferences _prefs;
 
-  // Initialize shared preferences
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
     _loadCurrentUser();
   }
 
-  // Get current user
   UserModel? get currentUser => _currentUser;
 
-  // Auth state changes stream
   Stream<UserModel?> get authStateChanges => Stream.value(_currentUser);
 
-  // Load current user from shared preferences
   void _loadCurrentUser() {
     try {
       final currentUserJson = _prefs.getString(_currentUserKey);

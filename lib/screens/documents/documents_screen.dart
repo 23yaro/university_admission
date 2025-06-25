@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
-import '../../services/auth_service.dart';
+import '../../services/uni_service.dart';
 import '../../services/storage_service.dart';
 import '../../models/user_model.dart';
 
@@ -49,7 +49,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
 
   Future<void> _loadUserData() async {
     try {
-      final user = context.read<AuthService>().currentUser;
+      final user = context.read<UniService>().currentUser;
       if (user != null) {
         if (mounted) {
           setState(() {
@@ -180,7 +180,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
       setState(() => _isLoading = true);
 
       try {
-        final user = context.read<AuthService>().currentUser;
+        final user = context.read<UniService>().currentUser;
         if (user == null) throw Exception('Пользователь не авторизован');
 
         String? passportUrl;
@@ -225,7 +225,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
         }
 
         // Update user data through API
-        await context.read<AuthService>().updateProfile(
+        await context.read<UniService>().updateProfile(
           fullName: _fullNameController.text.trim(),
           passportSeries: _passportSeriesController.text.trim(),
           passportNumber: _passportNumberController.text.trim(),

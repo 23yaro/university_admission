@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/auth_service.dart';
+import '../../services/uni_service.dart';
 import '../../services/storage_service.dart';
 import '../../models/user_model.dart';
 
@@ -25,7 +25,7 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
 
   Future<void> _loadUserData() async {
     try {
-      final user = context.read<AuthService>().currentUser;
+      final user = context.read<UniService>().currentUser;
       if (user != null) {
         if (mounted) {
           setState(() {
@@ -78,7 +78,6 @@ class _ApplicationStatusScreenState extends State<ApplicationStatusScreen> {
     try {
       final file = await _storageService.getFile(filePath);
       if (file != null) {
-        // TODO: Implement file opening logic
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Файл открыт')),
         );

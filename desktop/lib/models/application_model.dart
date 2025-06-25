@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:university_admission/services/uni_service.dart';
 
 class Passport {
   final String id;
@@ -25,6 +26,7 @@ class Passport {
 class AdditionalFile {
   final String name;
   final String path;
+
   AdditionalFile({required this.name, required this.path});
 }
 
@@ -55,57 +57,17 @@ class Application {
 }
 
 class ApplicationModel extends ChangeNotifier {
-  final List<Application> _applications = [
-    Application(
-      id: '1',
-      fullName: 'Иванов Иван Иванович',
-      email: 'ivanov@example.com',
-      phone: '+7 900 123-45-67',
-      passportPath: 'C:/mock_files/passport_ivanov.pdf',
-      applicationFormPath: 'C:/mock_files/application_ivanov.pdf',
-      medicalCertificatePath: 'C:/mock_files/med_ivanov.pdf',
-      passport: Passport(
-        id: 'uuid-1',
-        firstName: 'Иван',
-        lastName: 'Иванов',
-        surName: 'Иванович',
-        passSeries: '1234',
-        passNum: '567890',
-        passProduced: DateTime(2015, 5, 20),
-        dob: DateTime(1998, 3, 15),
-      ),
-      additionalFiles: [
-        AdditionalFile(name: 'Справка', path: 'C:/mock_files/extra_ivanov_1.pdf'),
-        AdditionalFile(name: 'ГТО', path: 'C:/mock_files/extra_ivanov_2.pdf'),
-        AdditionalFile(name: 'Портфолио', path: 'C:/mock_files/portfolio_ivanov.pdf'),
-        AdditionalFile(name: 'Индивидуальные достижения', path: 'C:/mock_files/olympiad_certificate_ivanov.pdf'),
-      ],
-      isReviewed: false,
-    ),
-    Application(
-      id: '2',
-      fullName: 'Петрова Мария Сергеевна',
-      email: 'petrova@example.com',
-      phone: '+7 900 765-43-21',
-      passportPath: 'C:/mock_files/passport_petrova.pdf',
-      applicationFormPath: 'C:/mock_files/application_petrova.pdf',
-      medicalCertificatePath: 'C:/mock_files/med_petrova.pdf',
-      passport: Passport(
-        id: 'uuid-2',
-        firstName: 'Мария',
-        lastName: 'Петрова',
-        surName: 'Сергеевна',
-        passSeries: '4321',
-        passNum: '098765',
-        passProduced: DateTime(2016, 7, 10),
-        dob: DateTime(1999, 12, 1),
-      ),
-      additionalFiles: [],
-      isReviewed: true,
-    ),
-  ];
+  final UniService uniService;
+  final List<Application> _applications = [];
+
+  ApplicationModel(this.uniService);
 
   List<Application> get applications => _applications;
+
+  Future<Application> loadApplications(Application application) async{
+   final result = uniService.loadApplications();
+   return result;
+  }
 
   void addApplication(Application application) {
     _applications.add(application);
@@ -124,4 +86,4 @@ class ApplicationModel extends ChangeNotifier {
     _applications.removeWhere((app) => app.id == id);
     notifyListeners();
   }
-} 
+}

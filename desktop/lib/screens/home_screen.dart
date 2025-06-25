@@ -3,9 +3,15 @@ import 'package:provider/provider.dart';
 import '../models/application_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final ApplicationModel model = get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +20,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () {
-              // TODO: Implement refresh functionality
-            },
+            onPressed: ()async =>  model.loadApplications(),
           ),
         ],
       ),
@@ -203,4 +207,4 @@ class HomeScreen extends StatelessWidget {
   String _formatDate(DateTime date) {
     return '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
   }
-} 
+}

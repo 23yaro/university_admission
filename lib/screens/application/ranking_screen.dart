@@ -4,50 +4,6 @@ import '../../models/user_model.dart';
 class RankingScreen extends StatelessWidget {
    RankingScreen({super.key});
 
-  // Моковые данные для ранжированного списка
-  final List<Map<String, dynamic>> _mockRankingList = [
-    {
-      'fullName': 'Иванов Иван Иванович',
-      'faculty': 'Инженерный факультет',
-      'program': 'Информационные технологии',
-      'studyForm': 'Очная',
-      'score': 95,
-      'status': 'Рекомендован к зачислению',
-    },
-    {
-      'fullName': 'Петров Петр Петрович',
-      'faculty': 'Инженерный факультет',
-      'program': 'Информационные технологии',
-      'studyForm': 'Очная',
-      'score': 92,
-      'status': 'Рекомендован к зачислению',
-    },
-    {
-      'fullName': 'Сидоров Сидор Сидорович',
-      'faculty': 'Инженерный факультет',
-      'program': 'Информационные технологии',
-      'studyForm': 'Очная',
-      'score': 88,
-      'status': 'В списке ожидания',
-    },
-    {
-      'fullName': 'Смирнова Анна Ивановна',
-      'faculty': 'Инженерный факультет',
-      'program': 'Информационные технологии',
-      'studyForm': 'Очная',
-      'score': 85,
-      'status': 'В списке ожидания',
-    },
-    {
-      'fullName': 'Козлов Алексей Петрович',
-      'faculty': 'Инженерный факультет',
-      'program': 'Информационные технологии',
-      'studyForm': 'Очная',
-      'score': 82,
-      'status': 'В списке ожидания',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

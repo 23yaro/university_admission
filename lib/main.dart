@@ -4,7 +4,7 @@ import 'package:university_admission/models/user_model.dart';
 import 'package:university_admission/screens/application/ranking_screen.dart';
 import 'package:university_admission/screens/auth/registration_screen.dart';
 import 'package:university_admission/screens/documents/documents_screen.dart';
-import 'services/auth_service.dart';
+import 'services/uni_service.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/application/application_form_screen.dart';
@@ -13,13 +13,13 @@ import 'screens/application/rankings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final authService = AuthService();
+  final authService = UniService();
   await authService.init();
   runApp(MyApp(authService: authService));
 }
 
 class MyApp extends StatelessWidget {
-  final AuthService authService;
+  final UniService authService;
 
   const MyApp({super.key, required this.authService});
 
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AuthService>.value(value: authService),
+        Provider<UniService>.value(value: authService),
         StreamProvider(
-          create: (context) => context.read<AuthService>().authStateChanges,
+          create: (context) => context.read<UniService>().authStateChanges,
           initialData: authService.currentUser,
         ),
       ],
