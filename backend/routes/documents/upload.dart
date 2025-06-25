@@ -1,9 +1,9 @@
 import 'package:dart_frog/dart_frog.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:postgres/postgres.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:path/path.dart' as path;
-import 'package:encrypt/encrypt.dart' as encrypt;
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {
@@ -141,9 +141,9 @@ Future<Response> onRequest(RequestContext context) async {
       final filePath = path.join(uploadDir.path, fileName);
 
       final bytes = await file.readAsBytes();
-      final key = encrypt.Key.fromUtf8(String.fromEnvironment('AES_KEY')); // 32 символа
-      final iv = encrypt.IV.fromLength(16);
-      final encrypter = encrypt.Encrypter(encrypt.AES(key));
+      final key = Key.fromUtf8(String.fromEnvironment('AES_KEY')); // 32 символа
+      final iv = IV.fromLength(16);
+      final encrypter = Encrypter(AES(key));
       final encrypted = encrypter.encryptBytes(bytes, iv: iv);
       await File(filePath).writeAsBytes(encrypted.bytes);
 
