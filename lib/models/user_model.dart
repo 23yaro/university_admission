@@ -1,3 +1,5 @@
+import '../../desktop/lib/models/application_model.dart';
+
 class UserModel {
   final String id;
   final String loginId;
@@ -8,15 +10,8 @@ class UserModel {
   final String passportNumber;
   final String passportIssueDate;
   final String birthDate;
-  final String passportCopyUrl;
-  final String certificateCopyUrl;
-  final String medicalCertificateUrl;
-  final String applicationCopyUrl;
-  final List<String> additionalDocumentsUrls;
-  final String faculty;
-  final String program;
-  final String studyForm;
-  final String applicationStatus;
+  final ApplicationModel application;
+
 
   UserModel({
     required this.id,
@@ -28,15 +23,7 @@ class UserModel {
     required this.passportNumber,
     required this.passportIssueDate,
     required this.birthDate,
-    required this.passportCopyUrl,
-    required this.certificateCopyUrl,
-    required this.medicalCertificateUrl,
-    required this.applicationCopyUrl,
-    required this.additionalDocumentsUrls,
-    required this.faculty,
-    required this.program,
-    required this.studyForm,
-    required this.applicationStatus,
+    required this.application,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,15 +37,15 @@ class UserModel {
       'passportNumber': passportNumber,
       'passportIssueDate': passportIssueDate,
       'birthDate': birthDate,
-      'passportCopyUrl': passportCopyUrl,
-      'certificateCopyUrl': certificateCopyUrl,
-      'medicalCertificateUrl': medicalCertificateUrl,
-      'applicationCopyUrl': applicationCopyUrl,
-      'additionalDocumentsUrls': additionalDocumentsUrls,
-      'faculty': faculty,
-      'program': program,
-      'studyForm': studyForm,
-      'applicationStatus': applicationStatus,
+      'passportCopyUrl': application.passportCopyUrl,
+      'certificateCopyUrl': application.certificateCopyUrl,
+      'medicalCertificateUrl': application.medicalCertificateUrl,
+      'applicationCopyUrl': application.applicationCopyUrl,
+      'additionalDocumentsUrls': application.additionalDocumentsUrls,
+      'faculty': application.faculty,
+      'program': application.program,
+      'studyForm': application.studyForm,
+      'applicationStatus': application.applicationStatus,
     };
   }
 
