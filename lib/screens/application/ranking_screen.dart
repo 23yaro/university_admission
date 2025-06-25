@@ -72,9 +72,9 @@ class RankingScreen extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: _mockRankingList.length,
+                  itemCount: _rankingList.length,
                   itemBuilder: (context, index) {
-                    final applicant = _mockRankingList[index];
+                    final applicant = _rankingList[index];
                     return Card(
                       elevation: 2,
                       margin: const EdgeInsets.only(bottom: 8),

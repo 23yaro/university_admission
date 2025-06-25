@@ -128,13 +128,13 @@ class _RankingsScreenState extends State<RankingsScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          if (_mockRankings.containsKey(_selectedProgram))
+                          if (_rankings.containsKey(_selectedProgram))
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: _mockRankings[_selectedProgram]!.length,
+                              itemCount: _rankings[_selectedProgram]!.length,
                               itemBuilder: (context, index) {
-                                final applicant = _mockRankings[_selectedProgram]![index];
+                                final applicant = _rankings[_selectedProgram]![index];
                                 return Card(
                                   elevation: 2,
                                   margin: const EdgeInsets.only(bottom: 8),
