@@ -140,7 +140,6 @@ Future<Response> onRequest(RequestContext context) async {
       final fileName = '${scanId}_${file.name}';
       final filePath = path.join(uploadDir.path, fileName);
 
-      // Шифрование файла
       final bytes = await file.readAsBytes();
       final key = encrypt.Key.fromUtf8(String.fromEnvironment('AES_KEY')); // 32 символа
       final iv = encrypt.IV.fromLength(16);

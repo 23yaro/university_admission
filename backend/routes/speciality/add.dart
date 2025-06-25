@@ -16,7 +16,6 @@ Future<Response> onRequest(RequestContext context) async {
     }
 
     final db = context.read<PostgreSQLConnection>();
-    // Проверка на уникальность
     final exists = await db.mappedResultsQuery(
       'SELECT * FROM speciality WHERE spec_name = @specName OR code_name = @codeName',
       substitutionValues: {'specName': specName, 'codeName': codeName},

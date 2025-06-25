@@ -1,23 +1,28 @@
+import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:postgres/postgres.dart';
-import 'config/database.dart';
 import 'middleware/auth_middleware.dart';
 
-Future<HttpServer> run(Handler handler, InternetAddress ip, int port) async {
-  final db = DatabaseConfig();
-  await db.initialize();
+final db = PostgreSQLConnection(
+  'localhost', // host
+  5432,        // port
+  'university_admission', // database name
+  username: 'postgres',
+  password: '2308',
+);
 
+Future<HttpServer> run(Handler handler, InternetAddress ip, int port) async {
   final pipeline = Pipeline()
-      .use(_provideDatabase(db))
-      .use(_authMiddleware());
+      .addMiddleware(_provideDatabase(db))
+      .addMiddleware(_authMiddleware());
 
   return serve(pipeline.addHandler(handler), ip, port);
 }
 
-Middleware _provideDatabase(DatabaseConfig db) {
+Middleware _provideDatabase(PostgreSQLConnection db) {
   return (handler) {
     return (context) async {
-      final updatedContext = context.provide(() => db.connection);
+      final updatedContext = context.provide(() => db);
       return handler(updatedContext);
     };
   };
